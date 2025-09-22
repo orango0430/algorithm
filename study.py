@@ -1,15 +1,20 @@
-arr = [5,3,9,7,6,4,1]
-def quick_sort(arr):
-    if len(arr) <= 1:
+arr = [5,3,9,7,6,4,1,2]
+def merge_sort(arr):
+    if len(arr) < 2:
         return arr
-    pivot = arr[len(arr)//2]
-    left_arr,equal_arr,right_arr = [], [], []
-    for num in arr:
-        if num < pivot:
-            left_arr.append(num)
-        elif num > pivot:
-            right_arr.append(num)
+    mid = len(arr) // 2
+    low_arr = merge_sort(arr[:mid])
+    high_arr = merge_sort(arr[mid:])
+    merged_arr = []
+    i = h = 0
+    while i < len(low_arr) and h < len(high_arr):
+        if low_arr[i] < high_arr[h]:
+            merged_arr.append(low_arr[i])
+            i += 1
         else:
-            equal_arr.append(num)
-    return quick_sort(left_arr) + equal_arr + quick_sort(right_arr)
-print(quick_sort(arr))
+            merged_arr.append(high_arr[h])
+            h += 1
+    merged_arr += low_arr[i:]
+    merged_arr += high_arr[h:]
+    return merged_arr
+print(merge_sort(arr))
